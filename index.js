@@ -1,27 +1,27 @@
 const botEmail = process.env.botEmail
 const botPassWord = process.env.TOKEN
 
-const chatexchange = require("chatexchange");
+const Client = require("chatexchange");
 
 const { ChatEventType } = require("chatexchange");
 
 const main = async () => {
-  const myClient = new Client("stackoverflow.com");
+  const client = new Client("stackoverflow.com");
 
-  await myClient.login(botEmail, botPassWord);
+  await client.login(botEmail, botPassWord);
 
-  const me = await myClient.getMe();
+  const me = await client.getMe();
 
-  const myProfile = await myClient.getProfile(me);
+  const myProfile = await client.getProfile(me);
 
   const { roomCount } = myProfile;
   console.log(`Rooms I am in: ${roomCount}`);
 
-  const room = myClient.getRoom(250034);
+  const room = client.getRoom(167908);
 
   room.ignore(ChatEventType.FILE_ADDED);
 
-  const joined = await myClient.joinRoom(room);
+  const joined = await client.joinRoom(room);
   if(joined) {
     room.on("message", async (msg) => {
         console.log("Got Message", msg);
@@ -48,7 +48,7 @@ const main = async () => {
     return;
   }
 
-  await myClient.logout();
+  await client.logout();
 };
 
 main();
